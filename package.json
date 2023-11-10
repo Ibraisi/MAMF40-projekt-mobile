@@ -1,0 +1,28 @@
+{
+  "name": "scanwlist",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "datamatrix-decoder": "^1.1.3",
+    "expo": "~49.0.15",
+    "expo-barcode-scanner": "~12.5.3",
+    "expo-status-bar": "~1.6.0",
+    "gs1-barcode-parser": "^1.0.1",
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-web": "~0.19.6",
+    "react-dom": "18.2.0",
+    "@expo/webpack-config": "^19.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/promise": "^7.1.30"
+  },
+  "private": true
+}
