@@ -6,6 +6,8 @@ import styles from './styles/AppStyle';
 import ScannerPermissionRequest from './Components/PermissionRequest';
 import BarcodeScannerView from './Components/BarcodeScanner';
 import ScannedItemsListView from './Components/ScannedDataList';
+import { validateSection } from './firebase/FirestoreService';
+
 
 export default function App() {
   const [hasScannerPermission, setHasScannerPermission] = useState(null);
@@ -16,6 +18,8 @@ export default function App() {
   const [isSectionSelected, setIsSectionSelected] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
   const [isSectionScannerVisible, setIsSectionScannerVisible] = useState(false);
+  const [scanError, setScanError] = useState(null);
+
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -26,11 +30,26 @@ export default function App() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const onSectionScanComplete = ({ type, data }) => {
-    setSelectedSection("Determined Section");
-    setIsSectionSelected(true);
-    setIsSectionScannerVisible(false);
+  const onSectionScanComplete = async ({ type, data }) => {
+    // 'data' contains the scanned ID from the barcode
+    const sectionName = await validateSection(data); // Pass the scanned ID to the validateSection function
+    console.log(sectionName)
+  
+    if (sectionName) {
+      setSelectedSection(sectionName);
+      setIsSectionSelected(true);
+      setIsSectionScannerVisible(false);
+    } else {
+      setScanError('Section not found. Please try scanning again.');
+      setIsSectionScannerVisible(true);
+    }
   };
+
+
+  const handleRemoveItem = (itemId) => {
+    setScannedItemsList(prevList => prevList.filter(item => item.id !== itemId));
+  };
+  
 
   const onBarcodeScanComplete = async ({ type, data }) => {
     try {
@@ -39,7 +58,7 @@ export default function App() {
       const expiry = decodedData.expiry || 'N/A';
       const lot = decodedData.lot || 'N/A';
       const serial = decodedData.serial || 'N/A';
-      const formattedText = `GTIN: ${gtin}\nExpiry: ${expiry}\nLOT: ${lot}\nSerial: ${serial}`;
+      const formattedText = `GTIN: ${gtin}`;
       setBarcodeDataDisplay(formattedText);
 
       const scannedItem = { id: new Date().getTime().toString(), data: formattedText };
@@ -87,7 +106,23 @@ export default function App() {
       </View>
     );
   }
-
+  if (isSectionScannerVisible) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'left' }}>
+          Scan the section first
+        </Text>
+        {scanError && (
+          <View>
+            <Text style={{ color: 'red', marginBottom: 10 }}>{scanError}</Text>
+            <Button title="Rescan Section" onPress={() => setScanError(null)} />
+          </View>
+        )}
+        <BarcodeScannerView onScan={onSectionScanComplete} scanned={isSectionSelected} />
+      </View>
+    );
+  }
+  
   return (
     <View style={styles.container}>
       {selectedSection && <Text>Selected Section: {selectedSection}</Text>}
@@ -99,7 +134,7 @@ export default function App() {
       <View style={styles.buttonContainer}>
         <Button title={rescanButtonText} onPress={triggerRescan} disabled={!isBarcodeScanned} style={styles.button} />
       </View>
-      <ScannedItemsListView scannedDataList={scannedItemsList} />
+      <ScannedItemsListView scannedDataList={scannedItemsList} handleRemoveItem={handleRemoveItem} />
       <View style={{...styles.buttonContainer, marginTop: 0}}>
         <Button title="Change Section" onPress={resetSectionSelection} style={styles.button} />
       </View>
