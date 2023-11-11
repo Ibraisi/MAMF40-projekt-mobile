@@ -7,7 +7,7 @@ import ScannerPermissionRequest from './Components/PermissionRequest';
 import BarcodeScannerView from './Components/BarcodeScanner';
 import ScannedItemsListView from './Components/ScannedDataList';
 import { validateSection } from './firebase/FirestoreService';
-
+//hej
 
 export default function App() {
   const [hasScannerPermission, setHasScannerPermission] = useState(null);
