@@ -66,14 +66,13 @@ export default function App() {
   
       try {
         const decodedData = readDataMatrix(data);
-        const currentsection = selectedSection;
         console.log("efter scan " + selectedSection)
         const medInfo = new MedInformation(
           "0" + decodedData.gtin,
           decodedData.expiry,
           decodedData.lot,
           decodedData.serial,
-          currentsection
+          selectedSection
         );
         setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
   
