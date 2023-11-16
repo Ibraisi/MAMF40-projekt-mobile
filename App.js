@@ -40,6 +40,8 @@ export default function App() {
 
   // Handler for section scan completion
   const onSectionScanComplete = async ({ type, data }) => {
+    setIsBarcodeScanned(true);
+
     const sectionName = await validateSection(data);
     if (sectionName) {
       setSelectedSection(sectionName);
@@ -64,7 +66,7 @@ export default function App() {
       try {
         const decodedData = readDataMatrix(data);
         const medInfo = new MedInformation(
-          decodedData.gtin,
+          "0" + decodedData.gtin,
           decodedData.expiry,
           decodedData.lot,
           decodedData.serial
