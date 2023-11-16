@@ -13,12 +13,6 @@ import {
   validateSection,
 } from "./firebase/FirestoreService";
 import MedInformation from "./model/MedInformation";
-import styles from './styles/AppStyle';
-import ScannerPermissionRequest from './Components/PermissionRequest';
-import BarcodeScannerView from './Components/BarcodeScanner';
-import ScannedItemsListView from './Components/ScannedDataList';
-import { validateSection } from './firebase/FirestoreService';
-//hej
 
 export default function App() {
   // State definitions
@@ -64,23 +58,32 @@ export default function App() {
 
   // Handler for barcode scan completion
   const onBarcodeScanComplete = async ({ type, data }) => {
-    try {
-      const decodedData = readDataMatrix(data);
-      const medInfo = new MedInformation(
-        decodedData.gtin,
-        decodedData.expiry,
-        decodedData.lot,
-        decodedData.serial
-      );
-      setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
-
-      const scannedItem = { data: medInfo };
-      setScannedItemsList((prevList) => [scannedItem, ...prevList]);
-
+    if (!isBarcodeScanned) {
       setIsBarcodeScanned(true);
-      setRescanButtonText("Skanna igen");
-    } catch (error) {
-      console.error("Fel vid hantering av streckkodsskanning:", error);
+  
+      try {
+        const decodedData = readDataMatrix(data);
+        const medInfo = new MedInformation(
+          decodedData.gtin,
+          decodedData.expiry,
+          decodedData.lot,
+          decodedData.serial
+        );
+        setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
+  
+        const scannedItem = { data: medInfo };
+        setScannedItemsList((prevList) => [scannedItem, ...prevList]);
+  
+        setRescanButtonText("Skanna igen");
+  
+        // Set a timeout to re-enable the scanner
+        setTimeout(() => {
+          setIsBarcodeScanned(false);
+        }, 3000); // 3-second delay
+  
+      } catch (error) {
+        console.error("Fel vid hantering av streckkodsskanning:", error);
+      }
     }
   };
 
