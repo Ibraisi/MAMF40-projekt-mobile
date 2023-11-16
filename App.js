@@ -60,16 +60,20 @@ export default function App() {
 
   // Handler for barcode scan completion
   const onBarcodeScanComplete = async ({ type, data }) => {
+    console.log(selectedSection)
     if (!isBarcodeScanned) {
       setIsBarcodeScanned(true);
   
       try {
         const decodedData = readDataMatrix(data);
+        const currentsection = selectedSection;
+        console.log("efter scan " + selectedSection)
         const medInfo = new MedInformation(
           "0" + decodedData.gtin,
           decodedData.expiry,
           decodedData.lot,
-          decodedData.serial
+          decodedData.serial,
+          currentsection
         );
         setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
   

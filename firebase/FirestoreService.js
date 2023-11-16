@@ -53,6 +53,7 @@ export const validateSection = async (sectionId) => {
           gtin: medInfo.gtin,
           lot: medInfo.lot,
           serial: medInfo.serial,
+          section : medInfo.section
         };
       } else {
         // Handle the case where medInfo is not a valid instance of MedInformation
@@ -62,6 +63,7 @@ export const validateSection = async (sectionId) => {
           gtin: 'N/A',
           lot: 'N/A',
           serial: 'N/A',
+          section: "N/A",
         };
       }
     };
