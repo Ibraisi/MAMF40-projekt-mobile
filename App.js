@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button,Alert } from "react-native";
+import { Text, View, Button, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { readDataMatrix } from 'datamatrix-decoder';
+import { readDataMatrix } from "datamatrix-decoder";
 
 // Local imports
 import styles from "./styles/AppStyle";
@@ -21,6 +21,7 @@ export default function App() {
   const [barcodeDataDisplay, setBarcodeDataDisplay] = useState(
     "Sikta på en streckkod för att skanna"
   );
+  const [shouldScan, setShouldScan] = useState(true);
   const [scannedItemsList, setScannedItemsList] = useState([]);
   const [rescanButtonText, setRescanButtonText] = useState("Skanna");
   const [isSectionSelected, setIsSectionSelected] = useState(false);
@@ -40,17 +41,31 @@ export default function App() {
 
   // Handler for section scan completion
   const onSectionScanComplete = async ({ type, data }) => {
+    setShouldScan(false); // Stop the camera from scanning
     setIsBarcodeScanned(true);
 
-    const sectionName = await validateSection(data);
-    if (sectionName) {
-      setSelectedSection(sectionName);
-      setIsSectionSelected(true);
-      setIsSectionScannerVisible(false);
-      Alert.alert("Success", `Section '${sectionName}' successfully scanned.`);
-    } else {
-      setScanError("Section not found. Please try scanning again.");
+    try {
+      const sectionName = await validateSection(data);
+
+      if (sectionName) {
+        setIsSectionSelected(true);
+        setIsSectionScannerVisible(false);
+        setSelectedSection(sectionName);
+
+        Alert.alert(
+          "Success",
+          `Section '${sectionName}' successfully scanned.`
+        );
+      } else {
+        throw new Error("Section not found");
+      }
+    } catch (error) {
+      setScanError(error.message);
       setIsSectionScannerVisible(true);
+      Alert.alert(
+        "Scan Failed",
+        error.message || "Error occurred during scanning."
+      );
     }
   };
 
@@ -61,13 +76,13 @@ export default function App() {
 
   // Handler for barcode scan completion
   const onBarcodeScanComplete = async ({ type, data }) => {
-    console.log(selectedSection)
+    console.log(selectedSection);
     if (!isBarcodeScanned) {
       setIsBarcodeScanned(true);
-  
+
       try {
         const decodedData = readDataMatrix(data);
-        console.log("efter scan " + selectedSection)
+        console.log("efter scan " + selectedSection);
         const medInfo = new MedInformation(
           "0" + decodedData.gtin,
           decodedData.expiry,
@@ -75,32 +90,33 @@ export default function App() {
           decodedData.serial,
           selectedSection
         );
+        if (scannedItemsList.some(item => item.data.gtin === medInfo.gtin)) {
+          Alert.alert("Duplicate Scan", "This item has already been scanned.");
+          setIsBarcodeScanned(true);
+          return;
+        }
         setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
-  
+
         const scannedItem = { data: medInfo };
         setScannedItemsList((prevList) => [scannedItem, ...prevList]);
-  
+
         setRescanButtonText("Skanna igen");
-  
-        // Set a timeout to re-enable the scanner
-        setTimeout(() => {
-          setIsBarcodeScanned(false);
-        }, 3000); // 3-second delay
-  
       } catch (error) {
-        console.error("Fel vid hantering av streckkodsskanning:", error);
+        //console.error("Fel vid hantering av streckkodsskanning:", error);
+        Alert.alert("Scan Failed", "Medicin finns ej");
       }
     }
   };
 
   // Handler to trigger rescan
   const triggerRescan = () => {
-    setBarcodeDataDisplay("Sikta på en streckkod för att skanna");
+    setShouldScan(true); // Allow the camera to start scanning again
     setIsBarcodeScanned(false);
   };
 
   // Handler to reset section selection
   const resetSectionSelection = () => {
+    setShouldScan(true);
     setIsSectionSelected(false);
     setSelectedSection(null);
     setIsSectionScannerVisible(true);
@@ -135,11 +151,17 @@ export default function App() {
         {scanError && (
           <View>
             <Text style={{ color: "red", marginBottom: 10 }}>{scanError}</Text>
-            <Button title="Rescan Section" onPress={() => setScanError(null)} />
+            <Button
+              title="Rescan Section"
+              onPress={() => {
+                setScanError(null);
+                setShouldScan(true);
+              }}
+            />
           </View>
         )}
         <BarcodeScannerView
-          onScan={onSectionScanComplete}
+          onScan={shouldScan ? onSectionScanComplete : null}
           scanned={isSectionSelected}
         />
       </View>
