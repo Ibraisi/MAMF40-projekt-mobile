@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button,Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { readDataMatrix } from 'datamatrix-decoder';
 
@@ -47,6 +47,7 @@ export default function App() {
       setSelectedSection(sectionName);
       setIsSectionSelected(true);
       setIsSectionScannerVisible(false);
+      Alert.alert("Success", `Section '${sectionName}' successfully scanned.`);
     } else {
       setScanError("Section not found. Please try scanning again.");
       setIsSectionScannerVisible(true);

@@ -2,6 +2,7 @@ import { db } from './firebaseConfig'; // Ensure this path is correct
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { async } from '@firebase/util';
 import MedInformation from '../model/MedInformation';
+import {Alert} from 'react-native'
 
 export const validateSection = async (sectionId) => {
     console.log("Querying for ID:", sectionId); // Log the ID being queried
@@ -25,22 +26,46 @@ export const validateSection = async (sectionId) => {
   };
 
   export const submitScannedItems = async ({scannedItemsList, setScannedItemsList}) => {
-    try {
-      console.log("hello from service :", {scannedItemsList})
-      
-      for (const item of scannedItemsList) {
-        const parsedData = parseItemData(item.data); // Ensure item.data is an instance of MedInformation
-        console.log("Parsed item: ", parsedData);
-  
-        const docRef = await addDoc(collection(db, 'med-data'), parsedData);
-        console.log('Document written with ID: ', docRef.id);
-      }
-  
-      setScannedItemsList([]);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+    if (scannedItemsList.length === 0) {
+      Alert.alert("Tom lista", "inget läckemedel har skannats.");
+      return;
     }
-  };
+  
+    Alert.alert(
+      "Confirm Submission",
+      "Are you sure you want to submit these items?",
+      [
+        { text: "avbryt", style: "cancel" },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              console.log("hello from service :", {scannedItemsList});
+              
+              for (const item of scannedItemsList) {
+                const parsedData = parseItemData(item.data); 
+                console.log("Parsed item: ", parsedData);
+      
+                const docRef = await addDoc(collection(db, 'med-data'), parsedData);
+                console.log('Document written with ID: ', docRef.id);
+              }
+      
+              setScannedItemsList([]);
+
+              // Alert after successful submission
+              Alert.alert("Success", "Items have been successfully submitted.");
+
+            } catch (e) {
+              console.error('Error adding document: ', e);
+              // Alert for any error during submission
+              Alert.alert("Error", "Failed to submit items. Please try again.");
+            }
+          },
+        },
+      ]
+    );
+};
+
   
 
 
