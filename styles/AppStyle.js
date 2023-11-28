@@ -17,7 +17,7 @@ export default StyleSheet.create({
         alignItems: 'flex-end', // Align text to the left
       },
       emptyContainer1: {
-        flex: 1, // Takes 10% of the screen height
+        flex: 0.5, // Takes 10% of the screen height
       },
       cameraContainer: {
         flex: 4, // Takes 70% of the screen height

@@ -171,7 +171,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topSpacer}></View>
+      <View style={styles.emptyContainer1}></View>
       <View style={styles.sectionHeader}>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
           Avdelning: {selectedSection}
