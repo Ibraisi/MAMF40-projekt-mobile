@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button, Alert } from "react-native";
+import { Text, View, Button, Alert,TouchableOpacity } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { readDataMatrix } from "datamatrix-decoder";
 
@@ -90,7 +90,7 @@ export default function App() {
           decodedData.serial,
           selectedSection
         );
-        if (scannedItemsList.some(item => item.data.gtin === medInfo.gtin)) {
+        if (scannedItemsList.some((item) => item.data.gtin === medInfo.gtin)) {
           Alert.alert("Duplicate Scan", "This item has already been scanned.");
           setIsBarcodeScanned(true);
           return;
@@ -126,7 +126,6 @@ export default function App() {
     setRescanButtonText("Skanna");
   };
 
-  // Render logic
   if (hasScannerPermission === null || hasScannerPermission === false) {
     return <ScannerPermissionRequest hasPermission={hasScannerPermission} />;
   }
@@ -134,10 +133,12 @@ export default function App() {
   if (!isSectionSelected && !isSectionScannerVisible) {
     return (
       <View style={styles.container}>
-        <Button
-          title="Start Section Scan"
+        <TouchableOpacity
+          style={styles.startScanButton}
           onPress={() => setIsSectionScannerVisible(true)}
-        />
+        >
+          <Text style={styles.startScanButtonText}>Start Section Scan</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -147,18 +148,20 @@ export default function App() {
       <View style={styles.container}>
         <View style={styles.emptyContainer1}></View>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
-          Scan the section first
+          Vänligen skanna streckkoden
         </Text>
         {scanError && (
           <View>
             <Text style={{ color: "red", marginBottom: 10 }}>{scanError}</Text>
-            <Button
-              title="Rescan Section"
+            <TouchableOpacity
+              style={styles.rescanButton}
               onPress={() => {
                 setScanError(null);
                 setShouldScan(true);
               }}
-            />
+            >
+              <Text style={styles.rescanButtonText}>Rescan Section</Text>
+            </TouchableOpacity>
           </View>
         )}
         <BarcodeScannerView
@@ -173,6 +176,7 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.topSpacer}></View>
       <View style={styles.sectionHeader}>
+        <View style={styles.emptyContainer1}></View>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
           Avdelning: {selectedSection}
         </Text>
@@ -182,29 +186,31 @@ export default function App() {
         scanned={isBarcodeScanned}
       />
       <View style={styles.buttonContainer}>
-        <Button
-          title={rescanButtonText}
+        <TouchableOpacity
+          style={styles.submitButton}
           onPress={triggerRescan}
           disabled={!isBarcodeScanned}
-          style={styles.button}
-        />
+        >
+          <Text style={styles.submitButtonText}>{rescanButtonText}</Text>
+        </TouchableOpacity>
       </View>
       <ScannedItemsListView
         scannedDataList={scannedItemsList}
         handleRemoveItem={handleRemoveItem}
       />
-      <Button
-        title="Submit Scanned Items"
-        onPress={() =>
-          submitScannedItems({ scannedItemsList, setScannedItemsList })
-        }
-      />
+      <TouchableOpacity
+        style={styles.submitButton}
+        onPress={() => submitScannedItems({ scannedItemsList, setScannedItemsList })}
+      >
+        <Text style={styles.submitButtonText}>Submit Scanned Items</Text>
+      </TouchableOpacity>
       <View style={{ ...styles.buttonContainer, marginTop: 0 }}>
-        <Button
-          title="Change Section"
+        <TouchableOpacity
+          style={styles.changeSectionButton}
           onPress={resetSectionSelection}
-          style={styles.button}
-        />
+        >
+          <Text style={styles.changeSectionButtonText}>Change Section</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.bottomSpacer}></View>
     </View>

@@ -7,19 +7,7 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
     <View style={styles.listContainer}>
       <ScrollView style={styles.scrollView}>
         {scannedDataList.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 10,
-              borderWidth: 1,
-              borderColor: "grey",
-              borderRadius: 5,
-              padding: 10,
-            }}
-          >
+          <View key={index} style={styles.scannedItemContainer}>
             <View>
               <Text style={styles.listItem}>
                 #{index + 1} GTIN: {item.data.gtin}
@@ -28,15 +16,10 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               {/* Additional item details here */}
             </View>
             <TouchableOpacity
-              onPress={() => handleRemoveItem(index)} // Use index for removal
-              style={{
-                marginLeft: 20,
-                backgroundColor: "red",
-                padding: 10,
-                borderRadius: 5,
-              }}
+              onPress={() => handleRemoveItem(index)}
+              style={styles.removeButton}
             >
-              <Text style={{ color: "white" }}>Remove</Text>
+              <Text style={styles.removeButtonText}>Remove</Text>
             </TouchableOpacity>
           </View>
         ))}
