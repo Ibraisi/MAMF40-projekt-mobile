@@ -145,6 +145,7 @@ export default function App() {
   if (isSectionScannerVisible) {
     return (
       <View style={styles.container}>
+        <View style={styles.emptyContainer1}></View>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
           Scan the section first
         </Text>
