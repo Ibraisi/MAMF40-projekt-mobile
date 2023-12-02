@@ -1,5 +1,7 @@
 import React from "react";
 import { View, ScrollView, TouchableOpacity, Text } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; // Adjust the library and icon as necessary
+
 import styles from "../styles/AppStyle"; // Adjust path as necessary
 
 const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
@@ -7,7 +9,19 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
     <View style={styles.listContainer}>
       <ScrollView style={styles.scrollView}>
         {scannedDataList.map((item, index) => (
-          <View key={index} style={styles.scannedItemContainer}>
+          <View
+            key={index}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: 10,
+              borderWidth: 1,
+              borderColor: "grey",
+              borderRadius: 5,
+              padding: 10,
+            }}
+          >
             <View>
               <Text style={styles.listItem}>
                 #{index + 1} GTIN: {item.data.gtin}
@@ -16,10 +30,16 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               {/* Additional item details here */}
             </View>
             <TouchableOpacity
-              onPress={() => handleRemoveItem(index)}
-              style={styles.removeButton}
+              onPress={() => handleRemoveItem(index)} // Use index for removal
+              style={{
+                marginLeft: 15,
+                backgroundColor: "red",
+                padding: 7,
+                borderRadius: 7,
+              }}
             >
-              <Text style={styles.removeButtonText}>Remove</Text>
+              <Icon name="trash" size={20} color="white" />
+
             </TouchableOpacity>
           </View>
         ))}

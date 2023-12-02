@@ -15,6 +15,8 @@ import {
 import MedInformation from "./model/MedInformation";
 
 export default function App() {
+  const [buttonOpacity, setButtonOpacity] = useState(1); // Set the initial opacity
+
   // State definitions
   const [hasScannerPermission, setHasScannerPermission] = useState(null);
   const [isBarcodeScanned, setIsBarcodeScanned] = useState(false);
@@ -77,6 +79,9 @@ export default function App() {
   // Handler for barcode scan completion
   const onBarcodeScanComplete = async ({ type, data }) => {
     console.log(selectedSection);
+    setButtonOpacity(1); // Set the opacity when something has been scanned
+
+
     if (!isBarcodeScanned) {
       setIsBarcodeScanned(true);
 
@@ -93,17 +98,20 @@ export default function App() {
         if (scannedItemsList.some((item) => item.data.gtin === medInfo.gtin)) {
           Alert.alert("Duplicate Scan", "This item has already been scanned.");
           setIsBarcodeScanned(true);
+          setButtonOpacity(1); // Set the opacity when something has been scanned
+
           return;
         }
         setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
 
         const scannedItem = { data: medInfo };
         setScannedItemsList((prevList) => [scannedItem, ...prevList]);
-
         setRescanButtonText("Skanna igen");
       } catch (error) {
         //console.error("Fel vid hantering av streckkodsskanning:", error);
         Alert.alert("Scan Failed", "Medicin finns ej");
+        setButtonOpacity(1); // Set the opacity in case of scan failure
+
       }
     }
   };
@@ -112,6 +120,8 @@ export default function App() {
   const triggerRescan = () => {
     setShouldScan(true); // Allow the camera to start scanning again
     setIsBarcodeScanned(false);
+    setButtonOpacity(0.5);
+
   };
 
   // Handler to reset section selection
@@ -177,7 +187,7 @@ export default function App() {
       <View style={styles.emptyContainer1}></View>
       <View style={styles.sectionHeader}>
         <View style={styles.emptyContainer1}></View>
-        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
+        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" , marginBottom:"0%"}}>
           Avdelning: {selectedSection}
         </Text>
       </View>
@@ -187,7 +197,7 @@ export default function App() {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={styles.submitButton}
+          style={{ ...styles.submitButton, opacity: buttonOpacity }}
           onPress={triggerRescan}
           disabled={!isBarcodeScanned}
         >
