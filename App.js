@@ -157,8 +157,8 @@ export default function App() {
     return (
       <View style={styles.container}>
         <View style={styles.emptyContainer1}></View>
-        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" }}>
-          Vänligen skanna streckkoden
+        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
+          Vänligen skanna vald avdelning
         </Text>
         {scanError && (
           <View>
@@ -195,6 +195,9 @@ export default function App() {
         onScan={onBarcodeScanComplete}
         scanned={isBarcodeScanned}
       />
+       <Text style={{ fontSize: 17, fontWeight: "bold", textAlign: "center", marginTop:"10%" }}>
+          Tryck "{rescanButtonText}" för att registrera medicin
+        </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={{ ...styles.submitButton, opacity: buttonOpacity }}
