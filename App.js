@@ -13,6 +13,7 @@ import {
   validateSection,
 } from "./firebase/FirestoreService";
 import MedInformation from "./model/MedInformation";
+import WebAppLink from "./Components/WebAppLink";
 
 export default function App() {
   const [buttonOpacity, setButtonOpacity] = useState(1); // Set the initial opacity
@@ -187,6 +188,7 @@ export default function App() {
       <View style={styles.emptyContainer1}></View>
       <View style={styles.sectionHeader}>
         <View style={styles.emptyContainer1}></View>
+        <WebAppLink/>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" , marginBottom:"0%"}}>
           Avdelning: {selectedSection}
         </Text>
