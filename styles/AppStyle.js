@@ -8,35 +8,50 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  imageStyle: {
+    width: "100%", // Adjust the width as needed
+    height: "50%", // Adjust the height as needed
+    resizeMode: "contain", // Adjust the resizeMode as needed
+  },
   sectionHeader: {
     flex: 0.1,
-    fontSize: 20, // Assuming scalable font size, adjust as necessary
+    fontSize: 25, // Assuming scalable font size, adjust as necessary
     fontWeight: "bold",
     marginVertical: "2%",
     marginLeft: 0,
-    alignItems: "flex-end",
+    alignItems: "flex-start",
   },
   emptyContainer1: {
     flex: 0.1,
+    width:"0%",
   },
   cameraContainer: {
     flex: 0.4,
-    width: "70%",
+    width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: "100%", // Adjust as necessary
-    marginTop:"5%",
-    marginBottom:"4%",
+    marginTop: "5%",
+    borderRadius: 10, // Apply border radius directly to camera container
+    borderWidth: 4,
+    borderColor: 'white',
   },
+  
+  cameraWrapper: {
+    flex: 1,
+    width: "100%",
+    borderRadius: "20%", // Apply border radius directly to the wrapper view
+    overflow: 'hidden', // Ensure that content is clipped to the border radius
+  },
+  
   camera: {
     aspectRatio: 1,
-    width: "100%",
-    backgroundColor: "lightgray",
-    borderRadius: 20, // Adjust as necessary
+    width: "100%", // Adjusted to fill the wrapper view
   },
+  
+  //
   buttonContainer: {
     flex: 0.1,
-    width: "40%",
+    width: "90%",
     marginTop: "2%",
     marginBottom: "1.5%",
     justifyContent: "center",
@@ -59,9 +74,10 @@ export default StyleSheet.create({
     flex: 0.4,
     width: "70%",
     borderStyle: "solid",
-    borderWidth: 1,
+    borderWidth: 2,
+    paddingHorizontal:"0.5%",
     borderColor: "grey",
-    borderRadius: 20, // Adjust as necessary
+    borderRadius: "5%", // Adjust as necessary
   },
   listItem: {
     fontSize: 16, // Assuming scalable font size, adjust as necessary
@@ -72,9 +88,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   startScanButton: {
-    backgroundColor: "#007bff",
-    padding: "1%",
-    borderRadius: 5,
+    backgroundColor: "grey",
+    padding: "5%",
+    width:"90%", 
+    borderRadius: "29%",
     marginTop: "1%",
     marginBottom: "1%",
   },
@@ -87,19 +104,31 @@ export default StyleSheet.create({
     padding: "1%",
     borderRadius: 5,
     marginTop: "1%",
-    marginBottom: "1%",
+    marginBottom: "10%",
   },
   rescanButtonText: {
     color: "white",
     textAlign: "center",
   },
+  submitButtonn: {
+    backgroundColor: "#28a745",
+    padding: "5%",
+    width: "90%",
+    //height:"5%",
+    borderRadius: "30%",
+    marginTop: "5%",
+    marginBottom: "5%",
+    //marginBottom: "1%",
+    color:"red",
+
+  },
   submitButton: {
     backgroundColor: "#28a745",
-    padding: "6%",
-    width: "70%",
+    padding: "5%",
+    width: "90%",
     //height:"5%",
-    borderRadius: 5,
-    marginTop: "5%",
+    borderRadius: "30%",
+    marginTop: "3%",
     //marginBottom: "1%",
     color:"red",
 
@@ -111,10 +140,11 @@ export default StyleSheet.create({
   },
   changeSectionButton: {
     backgroundColor: "#6c757d",
-    padding: "6%",
-    borderRadius: 5,
-    marginTop: "1%",
-    marginBottom: "1%",
+    padding: "4%",
+    borderRadius: "30%",
+    marginTop: "2%",
+    marginBottom: "5%",
+    width:300,
   },
   changeSectionButtonText: {
     color: "white",
@@ -125,7 +155,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: "1%",
-    borderRadius: 5,
+    borderRadius: "10%",
     padding: "1%",
   },
   removeButton: {

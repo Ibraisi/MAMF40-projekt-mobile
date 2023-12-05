@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button, Alert,TouchableOpacity } from "react-native";
+import { Text, View, Button, Alert,TouchableOpacity, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { readDataMatrix } from "datamatrix-decoder";
+import { Vibration, Platform } from "react-native";
+
 
 // Local imports
 import styles from "./styles/AppStyle";
@@ -54,10 +56,12 @@ export default function App() {
         setIsSectionSelected(true);
         setIsSectionScannerVisible(false);
         setSelectedSection(sectionName);
+        Vibration.vibrate();
 
         Alert.alert(
           "Success",
           `Section '${sectionName}' successfully scanned.`
+          
         );
       } else {
         throw new Error("Section not found");
@@ -81,11 +85,10 @@ export default function App() {
   const onBarcodeScanComplete = async ({ type, data }) => {
     console.log(selectedSection);
     setButtonOpacity(1); // Set the opacity when something has been scanned
-
-
+  
     if (!isBarcodeScanned) {
       setIsBarcodeScanned(true);
-
+  
       try {
         const decodedData = readDataMatrix(data);
         console.log("efter scan " + selectedSection);
@@ -100,11 +103,14 @@ export default function App() {
           Alert.alert("Duplicate Scan", "This item has already been scanned.");
           setIsBarcodeScanned(true);
           setButtonOpacity(1); // Set the opacity when something has been scanned
-
           return;
         }
+  
+        // Vibrate on successful scan
+        Vibration.vibrate();
+  
         setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
-
+  
         const scannedItem = { data: medInfo };
         setScannedItemsList((prevList) => [scannedItem, ...prevList]);
         setRescanButtonText("Skanna igen");
@@ -112,7 +118,6 @@ export default function App() {
         //console.error("Fel vid hantering av streckkodsskanning:", error);
         Alert.alert("Scan Failed", "Medicin finns ej");
         setButtonOpacity(1); // Set the opacity in case of scan failure
-
       }
     }
   };
@@ -144,12 +149,21 @@ export default function App() {
   if (!isSectionSelected && !isSectionScannerVisible) {
     return (
       <View style={styles.container}>
+         <Image
+      source={require("./regionskane.jpeg")} // Adjust the path accordingly
+      style={styles.imageStyle} // Add or adjust the style for the image
+
+    />
         <TouchableOpacity
           style={styles.startScanButton}
           onPress={() => setIsSectionScannerVisible(true)}
         >
-          <Text style={styles.startScanButtonText}>Start Section Scan</Text>
+          
+          
+          <Text style={styles.startScanButtonText}>Skanna avdelning</Text>
         </TouchableOpacity>
+        <WebAppLink/>
+
       </View>
     );
   }
@@ -188,9 +202,8 @@ export default function App() {
       <View style={styles.emptyContainer1}></View>
       <View style={styles.sectionHeader}>
         <View style={styles.emptyContainer1}></View>
-        <WebAppLink/>
-        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "left" , marginBottom:"0%"}}>
-          Avdelning: {selectedSection}
+        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
+           {selectedSection}
         </Text>
       </View>
       <BarcodeScannerView
@@ -200,9 +213,9 @@ export default function App() {
        <Text style={{ fontSize: 17, fontWeight: "bold", textAlign: "center", marginTop:"10%" }}>
           Tryck "{rescanButtonText}" för att registrera medicin
         </Text>
-      <View style={styles.buttonContainer}>
+      <View style={styles.submitButtonn}>
         <TouchableOpacity
-          style={{ ...styles.submitButton, opacity: buttonOpacity }}
+          style={{ opacity: buttonOpacity }}
           onPress={triggerRescan}
           disabled={!isBarcodeScanned}
         >
@@ -217,14 +230,15 @@ export default function App() {
         style={styles.submitButton}
         onPress={() => submitScannedItems({ scannedItemsList, setScannedItemsList })}
       >
-        <Text style={styles.submitButtonText}>Submit Scanned Items</Text>
+        <Text style={styles.submitButtonText}>Skicka in skannde objekt</Text>
       </TouchableOpacity>
-      <View style={{ ...styles.buttonContainer, marginTop: 0 }}>
+      <View >
         <TouchableOpacity
           style={styles.changeSectionButton}
           onPress={resetSectionSelection}
         >
-          <Text style={styles.changeSectionButtonText}>Change Section</Text>
+          <Text style={styles.changeSectionButtonText}>Ändra avdelning</Text>
+          
         </TouchableOpacity>
       </View>
       <View style={styles.bottomSpacer}></View>

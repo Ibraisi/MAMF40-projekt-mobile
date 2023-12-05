@@ -15,10 +15,10 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
-              marginBottom: 10,
+              marginBottom: "3%",
               borderWidth: 1,
               borderColor: "grey",
-              borderRadius: 5,
+              borderRadius: "5%",
               padding: 10,
             }}
           >
