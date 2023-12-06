@@ -59,27 +59,50 @@ export default function App() {
         Vibration.vibrate();
 
         Alert.alert(
-          "Success",
-          `Section '${sectionName}' successfully scanned.`
+          "Avdelning skannad",
+          `Välkommen till : ${sectionName} `
           
         );
       } else {
-        throw new Error("Section not found");
+        throw new Error("Avdelnig finns ej");
       }
     } catch (error) {
       setScanError(error.message);
       setIsSectionScannerVisible(true);
       Alert.alert(
-        "Scan Failed",
+        "Skannig till avdelning misslyckades",
         error.message || "Error occurred during scanning."
       );
     }
   };
 
   // Handler for removing an item from the list
-  const handleRemoveItem = (index) => {
-    setScannedItemsList((prevList) => prevList.filter((_, i) => i !== index));
+   handleRemoveItem = (index) => {
+    Alert.alert(
+      "Bekräfta borttagning",
+      `Är du säker på att du vill ta bort ${scannedItemsList[index].data.gtin}?`,
+      [
+        { text: "Avbryt", style: "cancel" },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              setScannedItemsList((prevList) => prevList.filter((_, i) => i !== index));
+            // ScannedItemsListView.updateListAfterRemoval(index);
+
+            } catch (e) {
+           //  const console.error('Ett fel uppstod vid borttagning: ', e);
+              // Avisera om fel uppstår vid borttagning
+              console.log(e)
+              Alert.alert("Fel", "Det gick inte att ta bort objektet. Försök igen.");
+            }
+          },
+        },
+      ]
+    );
   };
+  
+  
 
   // Handler for barcode scan completion
   const onBarcodeScanComplete = async ({ type, data }) => {
@@ -173,7 +196,7 @@ export default function App() {
       <View style={styles.container}>
         <View style={styles.emptyContainer1}></View>
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
-          Vänligen skanna vald avdelning
+          Skanna avdelning
         </Text>
         {scanError && (
           <View>
@@ -185,7 +208,7 @@ export default function App() {
                 setShouldScan(true);
               }}
             >
-              <Text style={styles.rescanButtonText}>Rescan Section</Text>
+              <Text style={styles.rescanButtonText}>Skanna avdelning</Text>
             </TouchableOpacity>
           </View>
         )}
