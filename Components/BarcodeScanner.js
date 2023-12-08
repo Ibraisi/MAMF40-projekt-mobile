@@ -6,10 +6,12 @@ import styles from '../styles/AppStyle'; // Adjust path as necessary
 const BarcodeScannerComponent = ({ onScan, scanned }) => {
   return (
     <View style={styles.cameraContainer}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : onScan}
-        style={styles.camera}
-      />
+      <View style={styles.cameraWrapper}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : onScan}
+          style={styles.camera}
+        />
+      </View>
     </View>
   );
 };
