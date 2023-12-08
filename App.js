@@ -13,6 +13,7 @@ import ScannedItemsListView from "./Components/ScannedDataList";
 import {
   submitScannedItems,
   validateSection,
+  getNameByPN,
 } from "./firebase/FirestoreService";
 import MedInformation from "./model/MedInformation";
 import WebAppLink from "./Components/WebAppLink";
@@ -108,42 +109,49 @@ export default function App() {
   const onBarcodeScanComplete = async ({ type, data }) => {
     console.log(selectedSection);
     setButtonOpacity(1); // Set the opacity when something has been scanned
-  
+
     if (!isBarcodeScanned) {
-      setIsBarcodeScanned(true);
-  
-      try {
-        const decodedData = readDataMatrix(data);
-        console.log("efter scan " + selectedSection);
-        const medInfo = new MedInformation(
-          "0" + decodedData.gtin,
-          decodedData.expiry,
-          decodedData.lot,
-          decodedData.serial,
-          selectedSection
-        );
-        if (scannedItemsList.some((item) => item.data.gtin === medInfo.gtin)) {
-          Alert.alert("Duplicate Scan", "This item has already been scanned.");
-          setIsBarcodeScanned(true);
-          setButtonOpacity(1); // Set the opacity when something has been scanned
-          return;
+        setIsBarcodeScanned(true);
+
+        try {
+            const decodedData = readDataMatrix(data);
+            console.log("efter scan " + selectedSection);
+
+            // Fetch the name based on PN
+            const medNameOrPN = await getNameByPN("0" + decodedData.gtin);
+
+            const medInfo = new MedInformation(
+                "0" + decodedData.gtin,
+                decodedData.expiry,
+                decodedData.lot,
+                decodedData.serial,
+                selectedSection,
+                medNameOrPN // Pass the fetched name or PN
+            );
+
+            if (scannedItemsList.some((item) => item.data.gtin === medInfo.gtin)) {
+                Alert.alert("Duplicate Scan", "This item has already been scanned.");
+                setIsBarcodeScanned(true);
+                setButtonOpacity(1); // Set the opacity when something has been scanned
+                return;
+            }
+
+            // Vibrate on successful scan
+            Vibration.vibrate();
+
+            setBarcodeDataDisplay(`Name/PN: ${medInfo.name}`);
+
+            const scannedItem = { data: medInfo };
+            setScannedItemsList((prevList) => [scannedItem, ...prevList]);
+            setRescanButtonText("Skanna igen");
+        } catch (error) {
+            console.log(error)
+            Alert.alert("Scan Failed", "Medicin finns ej");
+            setButtonOpacity(1); // Set the opacity in case of scan failure
         }
-  
-        // Vibrate on successful scan
-        Vibration.vibrate();
-  
-        setBarcodeDataDisplay(`GTIN: ${medInfo.gtin}`);
-  
-        const scannedItem = { data: medInfo };
-        setScannedItemsList((prevList) => [scannedItem, ...prevList]);
-        setRescanButtonText("Skanna igen");
-      } catch (error) {
-        //console.error("Fel vid hantering av streckkodsskanning:", error);
-        Alert.alert("Scan Failed", "Medicin finns ej");
-        setButtonOpacity(1); // Set the opacity in case of scan failure
-      }
     }
-  };
+};
+
 
   // Handler to trigger rescan
   const triggerRescan = () => {

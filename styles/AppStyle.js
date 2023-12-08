@@ -39,7 +39,7 @@ export default StyleSheet.create({
   cameraWrapper: {
     flex: 1,
     width: "100%",
-    borderRadius: "20%", // Apply border radius directly to the wrapper view
+    borderRadius: 20, // Apply border radius directly to the wrapper view
     overflow: 'hidden', // Ensure that content is clipped to the border radius
   },
   
@@ -77,7 +77,7 @@ export default StyleSheet.create({
     borderWidth: 2,
     paddingHorizontal:"0.5%",
     borderColor: "grey",
-    borderRadius: "5%", // Adjust as necessary
+    borderRadius: 5, // Adjust as necessary
   },
   listItem: {
     fontSize: 16, // Assuming scalable font size, adjust as necessary
@@ -91,7 +91,7 @@ export default StyleSheet.create({
     backgroundColor: "grey",
     padding: "5%",
     width:"90%", 
-    borderRadius: "29%",
+    borderRadius: 29,
     marginTop: "1%",
     marginBottom: "1%",
   },
@@ -115,7 +115,7 @@ export default StyleSheet.create({
     padding: "5%",
     width: "90%",
     //height:"5%",
-    borderRadius: "30%",
+    borderRadius: 30,
     marginTop: "5%",
     marginBottom: "5%",
     //marginBottom: "1%",
@@ -127,7 +127,7 @@ export default StyleSheet.create({
     padding: "5%",
     width: "90%",
     //height:"5%",
-    borderRadius: "30%",
+    borderRadius: 30,
     marginTop: "3%",
     //marginBottom: "1%",
     color:"red",
@@ -141,7 +141,7 @@ export default StyleSheet.create({
   changeSectionButton: {
     backgroundColor: "#6c757d",
     padding: "4%",
-    borderRadius: "30%",
+    borderRadius: 30,
     marginTop: "2%",
     marginBottom: "5%",
     width:300,
@@ -155,7 +155,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: "1%",
-    borderRadius: "10%",
+    borderRadius: 10,
     padding: "1%",
   },
   removeButton: {

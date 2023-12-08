@@ -92,5 +92,29 @@ export const validateSection = async (sectionId) => {
         };
       }
     };
+
+    export const getNameByPN = async (pn) => {
+      const q = query(collection(db, "med-name"), where("pn", "==", pn));
+  
+      try {
+          const querySnapshot = await getDocs(q);
+  
+          if (querySnapshot.empty) {
+              // If no document is found with the PN, return the PN itself
+              return pn;
+          } else {
+              // Return the name from the first document found
+              // (assuming each PN has only one associated document)
+              const doc = querySnapshot.docs[0];
+              const data = doc.data();
+              return data.name ? data.name : pn;
+          }
+      } catch (error) {
+          console.error('Error fetching data from Firestore:', error);
+          throw error;
+      }
+  };
+
+
     
   

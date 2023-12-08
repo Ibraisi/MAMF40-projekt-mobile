@@ -18,13 +18,13 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               marginBottom: "3%",
               borderWidth: 1,
               borderColor: "grey",
-              borderRadius: "5%",
+              borderRadius: 5,
               padding: 10,
             }}
           >
             <View>
               <Text style={styles.listItem}>
-                #{index + 1} GTIN: {item.data.gtin}
+                #{index + 1} Name/PN: {item.data.name}  {/* Displaying name or GTIN */}
               </Text>
               <Text style={styles.listItem}>Expiry: {item.data.expiry}</Text>
               {/* Additional item details here */}
@@ -39,7 +39,6 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               }}
             >
               <Icon name="trash" size={20} color="white" />
-
             </TouchableOpacity>
           </View>
         ))}
