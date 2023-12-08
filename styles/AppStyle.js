@@ -72,16 +72,16 @@ export default StyleSheet.create({
   },
   listContainer: {
     flex: 0.4,
-    width: "70%",
+    width: "80%",
     borderStyle: "solid",
     borderWidth: 2,
-    paddingHorizontal:"0.5%",
+   // paddingHorizontal:"0.5%",
     borderColor: "grey",
     borderRadius: 5, // Adjust as necessary
   },
   listItem: {
     fontSize: 16, // Assuming scalable font size, adjust as necessary
-    marginVertical: "0.4%",
+    marginVertical: "0.7%",
     paddingLeft: "0.7%",
   },
   scrollView: {

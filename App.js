@@ -81,7 +81,7 @@ export default function App() {
    handleRemoveItem = (index) => {
     Alert.alert(
       "Bekräfta borttagning",
-      `Är du säker på att du vill ta bort ${scannedItemsList[index].data.gtin}?`,
+      `Är du säker på att du vill ta bort ${scannedItemsList[index].data.name}?`,
       [
         { text: "Avbryt", style: "cancel" },
         {
@@ -142,7 +142,7 @@ export default function App() {
             setBarcodeDataDisplay(`Name/PN: ${medInfo.name}`);
 
             const scannedItem = { data: medInfo };
-            setScannedItemsList((prevList) => [scannedItem, ...prevList]);
+            setScannedItemsList((prevList) => [...prevList, scannedItem]);
             setRescanButtonText("Skanna igen");
         } catch (error) {
             console.log(error)

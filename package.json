@@ -15,7 +15,7 @@
     "expo": "~49.0.15",
     "expo-barcode-scanner": "~12.5.3",
     "expo-status-bar": "~1.6.0",
-    "firebase": "^10.6.0",
+    "firebase": "^10.7.1",
     "gs1-barcode-parser": "^1.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

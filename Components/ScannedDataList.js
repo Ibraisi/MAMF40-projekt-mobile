@@ -24,7 +24,7 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
           >
             <View>
               <Text style={styles.listItem}>
-                #{index + 1} Name/PN: {item.data.name}  {/* Displaying name or GTIN */}
+              #{index +1} Name/PN: {item.data.name}  {/* Displaying name or GTIN */}
               </Text>
               <Text style={styles.listItem}>Expiry: {item.data.expiry}</Text>
               {/* Additional item details here */}
@@ -32,7 +32,7 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
             <TouchableOpacity
               onPress={() => handleRemoveItem(index)} // Use index for removal
               style={{
-                marginLeft: 15,
+                //marginLeft: 15,
                 backgroundColor: "red",
                 padding: 7,
                 borderRadius: 7,
