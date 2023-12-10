@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  // Hela appen övergripliga style
   container: {
     flex: 1,
     backgroundColor: "white",
@@ -8,85 +9,94 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  // Style för Region Skåne bilden
   imageStyle: {
-    width: "100%", // Adjust the width as needed
-    height: "50%", // Adjust the height as needed
-    resizeMode: "contain", // Adjust the resizeMode as needed
+    width: "100%", 
+    height: "50%", 
+    resizeMode: "contain", 
   },
+  // Håller i headern, stylen för den är i App.js
   sectionHeader: {
-    flex: 0.1,
-    fontSize: 25, // Assuming scalable font size, adjust as necessary
-    fontWeight: "bold",
-    marginVertical: "2%",
-    marginLeft: 0,
-    alignItems: "flex-start",
+    flex: 0.08,
+   // marginVertical: "0%",
+   // alignItems: "flex-start",
   },
-  emptyContainer1: {
-    flex: 0.1,
-    width:"0%",
-  },
+  // Bägrensaren för wrappern, (lägg border color red för att se den)
   cameraContainer: {
-    flex: 0.4,
+    flex: 0.5,
     width: "80%",
-    justifyContent: "center",
-    alignItems: "center",
+   // justifyContent: "center",
+   // alignItems: "center",
     marginTop: "5%",
-    borderRadius: 10, // Apply border radius directly to camera container
+    borderRadius: 10, 
     borderWidth: 4,
     borderColor: 'white',
   },
   
+  // Kameran igger inuti denna som kontrollera kamerans begränsningar
   cameraWrapper: {
-    flex: 1,
-    width: "100%",
-    borderRadius: 20, // Apply border radius directly to the wrapper view
-    overflow: 'hidden', // Ensure that content is clipped to the border radius
+    //flex: 1,
+    height:270,
+
+   // width: "100%",
+    borderRadius: 20, 
+    overflow: 'hidden', 
   },
   
+  // Själva kameran 
   camera: {
     aspectRatio: 1,
-    width: "100%", // Adjusted to fill the wrapper view
+   // width: "100%", 
   },
   
   //
-  buttonContainer: {
+  //buttonContainer: {
+  //  flex: 0.1,
+  //  width: "1000%",
+  //  marginTop: "2%",
+  //  marginBottom: "1.5%",
+  //  justifyContent: "center",
+   // alignItems: "center",
+  //  borderRadius: 20, 
+ // },
+  //button: {
+  //  flex: 10,
+  //  justifyContent: 'center',
+  //  alignItems: 'center',
+  //  paddingVertical: "2%",
+  //  paddingHorizontal: "5%",
+  //  borderRadius: 20, 
+   // backgroundColor: "#007bff", 
+  //},
+
+  // Containern längst upp i sidan där man skannar mediciner
+  emptyContainer1: {
     flex: 0.1,
-    width: "90%",
-    marginTop: "2%",
-    marginBottom: "1.5%",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20, // Adjust as necessary
   },
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: "2%",
-    paddingHorizontal: "5%",
-    borderRadius: 20, // Adjust as necessary
-    backgroundColor: "#007bff", // Example button color
-  },
+    // Containern längst ner i sidan där man skannar mediciner
   emptyContainer2: {
     flex: 0.1,
   },
+  // Hela containern som innehåller alla medicincontainer
   listContainer: {
     flex: 0.4,
     width: "80%",
     borderStyle: "solid",
     borderWidth: 2,
-   // paddingHorizontal:"0.5%",
     borderColor: "grey",
-    borderRadius: 5, // Adjust as necessary
+    borderRadius: 5, 
   },
+  // Varje medicincontainer för sig själv
   listItem: {
-    fontSize: 16, // Assuming scalable font size, adjust as necessary
-    marginVertical: "0.7%",
+    fontSize: 16, 
+    marginVertical: "0.%",
     paddingLeft: "0.7%",
   },
-  scrollView: {
-    flex: 1,
-  },
+  //scrollView: {
+   // flex: 5,
+  //},
+
+  // Knappen på första sidan
   startScanButton: {
     backgroundColor: "grey",
     padding: "5%",
@@ -99,6 +109,7 @@ export default StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  // Knappen för att skanna igen efter att man har skannat fel avdelning
   rescanButton: {
     backgroundColor: "#ff9800",
     padding: "1%",
@@ -110,6 +121,7 @@ export default StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  // Knappen för att kunna skanna medciner
   submitButtonn: {
     backgroundColor: "#28a745",
     padding: "5%",
@@ -122,6 +134,7 @@ export default StyleSheet.create({
     color:"red",
 
   },
+  // Knappen som skickar datan till databasen när man skannar
   submitButton: {
     backgroundColor: "#28a745",
     padding: "5%",
@@ -129,7 +142,6 @@ export default StyleSheet.create({
     //height:"5%",
     borderRadius: 30,
     marginTop: "3%",
-    //marginBottom: "1%",
     color:"red",
 
   },
@@ -138,6 +150,7 @@ export default StyleSheet.create({
     textAlign: "center",
 
   },
+  //Knappen för att ändra avdelning när man skannar mediciner
   changeSectionButton: {
     backgroundColor: "#6c757d",
     padding: "4%",
@@ -150,21 +163,5 @@ export default StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
-  scannedItemContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: "1%",
-    borderRadius: 10,
-    padding: "1%",
-  },
-  removeButton: {
-    marginLeft: "2%",
-    backgroundColor: "red",
-    padding: "1%",
-    borderRadius: 5,
-  },
-  removeButtonText: {
-    color: "white",
-  },
+
 });

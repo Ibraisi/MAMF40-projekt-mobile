@@ -1,3 +1,5 @@
+//Användes för att testa ta ut data från en json fil
+
 const fs = require("fs");
 
 function findProductNameByBarcode(filePath, barcode) {

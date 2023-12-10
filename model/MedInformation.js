@@ -1,4 +1,5 @@
 class MedInformation {
+        // Konstruktorn skapar ett objekt med medicininformation baserat på tillhandahållna parametrar.
     constructor(gtin, expiry, lot, serial, section, name) {
         this.gtin = gtin || 'N/A';
         this.expiry = expiry || 'N/A';

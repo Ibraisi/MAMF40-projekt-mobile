@@ -4,6 +4,11 @@ import { async } from '@firebase/util';
 import MedInformation from '../model/MedInformation';
 import {Alert} from 'react-native'
 
+
+
+// Olka funktioner med databasen
+
+// Validera vid skanning av avdelning
 export const validateSection = async (sectionId) => {
     console.log("Querying for ID:", sectionId); // Log the ID being queried
   
@@ -25,11 +30,13 @@ export const validateSection = async (sectionId) => {
     }
   };
 
+  // Skicka skannade medicin till databasen
   export const submitScannedItems = async ({scannedItemsList, setScannedItemsList}) => {
     if (scannedItemsList.length === 0) {
       Alert.alert("Tom lista", "inget läckemedel har skannats.");
       return;
     }
+
   
     Alert.alert(
       "Confirm Submission",
@@ -42,6 +49,7 @@ export const validateSection = async (sectionId) => {
             try {
               console.log("hello from service :", {scannedItemsList});
               
+              // Visar vilka mediciner som skickades
               for (const item of scannedItemsList) {
                 const parsedData = parseItemData(item.data); 
                 console.log("Parsed item: ", parsedData);
@@ -69,7 +77,7 @@ export const validateSection = async (sectionId) => {
   
 
 
-    // A function to parse the item data (modify this according to your data format)
+    // Parse de olika delar av skannade koden av medicinen
     const parseItemData = (medInfo) => {
       // Check if medInfo is an instance of MedInformation and has the necessary fields
       if (medInfo instanceof MedInformation) {
@@ -78,7 +86,8 @@ export const validateSection = async (sectionId) => {
           gtin: medInfo.gtin,
           lot: medInfo.lot,
           serial: medInfo.serial,
-          section : medInfo.section
+          section : medInfo.section,
+          name : medInfo.name
         };
       } else {
         // Handle the case where medInfo is not a valid instance of MedInformation
@@ -89,10 +98,12 @@ export const validateSection = async (sectionId) => {
           lot: 'N/A',
           serial: 'N/A',
           section: "N/A",
+          name: "N/A"
         };
       }
     };
 
+    // Få ut medicinens namn från produktkod som man får vid skanning av medicin
     export const getNameByPN = async (pn) => {
       const q = query(collection(db, "med-name"), where("pn", "==", pn));
   

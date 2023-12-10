@@ -1,9 +1,9 @@
 import React from "react";
 import { View, ScrollView, TouchableOpacity, Text } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome"; // Adjust the library and icon as necessary
+import Icon from "react-native-vector-icons/FontAwesome"; 
+import styles from "../styles/AppStyle"; 
 
-import styles from "../styles/AppStyle"; // Adjust path as necessary
-
+// Style för hur listan ska se ut när man skannar medicinen
 const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
   return (
     <View style={styles.listContainer}>
@@ -11,11 +11,14 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
         {scannedDataList.map((item, index) => (
           <View
             key={index}
+            //Hur de skanna ska ligga och se ut i listan
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
               marginBottom: "3%",
+              marginVertical: "1%",
+              marginHorizontal:"2%",
               borderWidth: 1,
               borderColor: "grey",
               borderRadius: 5,
@@ -30,9 +33,8 @@ const ScannedDataListComponent = ({ scannedDataList, handleRemoveItem }) => {
               {/* Additional item details here */}
             </View>
             <TouchableOpacity
-              onPress={() => handleRemoveItem(index)} // Use index for removal
+              onPress={() => handleRemoveItem(index)} 
               style={{
-                //marginLeft: 15,
                 backgroundColor: "red",
                 padding: 7,
                 borderRadius: 7,
