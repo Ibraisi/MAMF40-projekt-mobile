@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../styles/AppStyle'; 
 
 // Funktionell komponent för att skapa ett streckkodsscanningsgränssnitt
-const BarcodeScannerComponent = ({ onScan, scanned }) => {
+const BarcodeScannerComponent = ({ onScan, scanned,cameraOpacity }) => {
   return (
     // Container för hela komponenten med specifika stilar från styles
     <View style={styles.cameraContainer}>
@@ -16,7 +16,7 @@ const BarcodeScannerComponent = ({ onScan, scanned }) => {
           // Om true då undefined(har skannat) annars false onScan(tillåtelse att skanna)
           onBarCodeScanned={scanned ? undefined : onScan}
           // Stilar för att anpassa kameraområdet (måste definieras i styles)
-          style={styles.camera}
+          style={[styles.camera, { opacity: cameraOpacity }]} // Update the style here
         />
       </View>
     </View>

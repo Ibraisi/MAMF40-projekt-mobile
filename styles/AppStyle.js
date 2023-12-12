@@ -28,16 +28,17 @@ export default StyleSheet.create({
    // justifyContent: "center",
    // alignItems: "center",
     marginTop: "5%",
-    borderRadius: 10, 
-    borderWidth: 4,
-    borderColor: 'white',
+    
   },
   
   // Kameran igger inuti denna som kontrollera kamerans begränsningar
   cameraWrapper: {
     //flex: 1,
+    
     height:270,
-
+    borderRadius: 10, 
+    borderWidth: 4,
+    //borderColor: 'white',
    // width: "100%",
     borderRadius: 20, 
     overflow: 'hidden', 

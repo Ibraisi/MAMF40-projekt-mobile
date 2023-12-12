@@ -40,6 +40,10 @@ export default function App() {
   const [rescanButtonText, setRescanButtonText] = useState("Skanna");
  // State för att hantera opacitet och olika tillstånd
   const [buttonOpacity, setButtonOpacity] = useState(1);
+  const [cameraOpacity, setCameraOpacity] = useState(0);
+
+
+  
  // Listan av skannade medicinerna 
   const [scannedItemsList, setScannedItemsList] = useState([]);
 
@@ -164,6 +168,7 @@ export default function App() {
   // Hanterare för att starta om skanningen
   const triggerRescan = () => {
     //setShouldScan(true);
+    setCameraOpacity(1);
 
     // För att kunna skanna medicin igen
     setIsBarcodeScanned(false);
@@ -177,6 +182,8 @@ export default function App() {
     // för att kunna skanna avdelning igen
     setShouldScan(true);
     setButtonOpacity(1);
+    setCameraOpacity(0);
+
     // För att kunna skanna med
     //setIsBarcodeScanned(false);
 
@@ -271,6 +278,7 @@ export default function App() {
       <BarcodeScannerView
         onScan={onBarcodeScanComplete}
         scanned={isBarcodeScanned}
+        cameraOpacity={cameraOpacity} // Add this line
       />
        <Text style={{ fontSize: 17, fontWeight: "bold", textAlign: "center", marginTop:"10%" }}>
           Tryck "{rescanButtonText}" för att skanna medicin

@@ -4,8 +4,6 @@ import { async } from '@firebase/util';
 import MedInformation from '../model/MedInformation';
 import {Alert} from 'react-native'
 
-
-
 // Olka funktioner med databasen
 
 // Validera vid skanning av avdelning
@@ -58,6 +56,7 @@ export const validateSection = async (sectionId) => {
                 console.log('Document written with ID: ', docRef.id);
               }
       
+
               setScannedItemsList([]);
 
               // Alert after successful submission

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Linking } from 'react-native';
 
 //Kopplingen mella appen och webbaplikationen
 const WebAppLink = () => {
-    const computerWebAppURL = 'http://172.20.10.2:3000'; // Your computer's web app URL
+    const computerWebAppURL = 'http://192.168.1.189:3000'; // Your computer's web app URL
   
     const openWebLink = () => {
       Linking.openURL(computerWebAppURL)
