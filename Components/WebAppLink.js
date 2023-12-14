@@ -14,7 +14,7 @@ const WebAppLink = () => {
   
     return (
       <View>
-        <Text style={{ marginTop:"10%" }}>Länk till webbapplikationen</Text>
+        <Text style={{ marginTop:"7%" }}>Länk till webbapplikationen</Text>
         <TouchableOpacity onPress={openWebLink}>
           <Text style={{ color: 'blue', textDecorationLine: 'underline',marginTop:"3%" }}>
             Öppna webbapplikationen

@@ -158,11 +158,18 @@ export default StyleSheet.create({
     borderRadius: 30,
     marginTop: "2%",
     marginBottom: "5%",
-    width:300,
+    width:150,
+    marginRight: 20
   },
   changeSectionButtonText: {
     color: "white",
     textAlign: "center",
   },
+  bottoHorizontelContiner:{
+    flexDirection: 'row', // Set flexDirection to 'row' for horizontal arrangement
+    justifyContent: 'space-between', // Adjust the spacing between the elements
+   // alignItems: 'center',
+
+  }
 
 });

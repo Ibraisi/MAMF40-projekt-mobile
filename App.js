@@ -259,7 +259,10 @@ export default function App() {
           // Det ger möjlighet att hantera olika skanningsbeteenden baserat på om en avdelning redan 
           //har valts eller inte.
         />
+                      <WebAppLink />
+
       </View>
+
     );
   }
 
@@ -283,15 +286,16 @@ export default function App() {
        <Text style={{ fontSize: 17, fontWeight: "bold", textAlign: "center", marginTop:"10%" }}>
           Tryck "{rescanButtonText}" för att skanna medicin
         </Text>
-      <View style={styles.submitButtonn}>
         <TouchableOpacity
-          style={{ opacity: buttonOpacity }}
-          onPress={triggerRescan}
-         // disabled={!isBarcodeScanned}
-        >
-          <Text style={styles.submitButtonText}>{rescanButtonText}</Text>
+            style={{ opacity: buttonOpacity, ...styles.submitButtonn }}
+            onPress={triggerRescan}
+            // disabled={!isBarcodeScanned}
+            >
+            {/* Your submit button content goes here */}
+            <Text style={styles.submitButtonText}>{rescanButtonText}</Text>
         </TouchableOpacity>
-      </View>
+        
+
       <ScannedItemsListView
         scannedDataList={scannedItemsList}
         handleRemoveItem={handleRemoveItem}
@@ -302,14 +306,20 @@ export default function App() {
       >
         <Text style={styles.submitButtonText}>Skicka in skannde objekt</Text>
       </TouchableOpacity>
-      <View >
+      <View style={styles.bottoHorizontelContiner}>
         <TouchableOpacity
           style={styles.changeSectionButton}
           onPress={resetSectionSelection}
         >
           <Text style={styles.changeSectionButtonText}>Ändra avdelning</Text>
+
         </TouchableOpacity>
+        
+        <WebAppLink />
+
+
       </View>
+
       <View style={styles.bottomSpacer}></View>
     </View>
   );

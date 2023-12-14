@@ -37,12 +37,12 @@ export const validateSection = async (sectionId) => {
 
   
     Alert.alert(
-      "Confirm Submission",
-      "Are you sure you want to submit these items?",
+      "Bekräfta inlämning",
+      "Är du säker på att du vill skicka dessa objekt?",
       [
-        { text: "avbryt", style: "cancel" },
+        { text: "Nej", style: "cancel" },
         {
-          text: "OK",
+          text: "Ja",
           onPress: async () => {
             try {
               console.log("hello from service :", {scannedItemsList});
